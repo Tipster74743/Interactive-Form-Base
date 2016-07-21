@@ -149,10 +149,10 @@ button:hover {
   clear: both;
 }
 
-.warning {
-	font-size: .45em;
-	font-color: red;
-	visibility: hidden;
+label.error {
+	color: red;
+	font-size: .7em;
+	margin-top: -10px;
 }
 
 /* ================================= 

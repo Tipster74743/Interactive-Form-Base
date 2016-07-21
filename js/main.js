@@ -23,6 +23,14 @@ $('#name, #mail').blur(function(){
     $('form').validate();
 });
 
+$('form').validate({
+    rules: {
+        creditcard: {
+            required: true,
+            creditcard: true
+        }
+    }
+});
 
 //*********** Events *************//
 
@@ -51,6 +59,7 @@ $design.change(function(){
     }
 });
 
+//Each of these functions check to see if the activity that shares a time with it is checked. If it is, the other is disabled.
 $jsFrameworks.click(function(){
     $express.prop("disabled", $jsFrameworks.prop("checked"));
 });
@@ -68,19 +77,53 @@ $node.click(function(){
 });
 
 
+//This toggles each of the payment types. Each shows a particular div that is associated with the value selected.
 $payment.change(function(){
     var paymentVal = $payment.val();
 
     if(paymentVal === "bitcoin"){
         $('#bitCoin').removeClass("is-hidden");
         $('#credit-card, #payPal').addClass("is-hidden");
+        $('#cc-num, #zip, #cvv').prop('required', false)
     }else if(paymentVal === "paypal"){
         $('#payPal').removeClass("is-hidden");
         $('#credit-card, #bitCoin').addClass("is-hidden");
+        $('#cc-num, #zip, #cvv').prop('required', false)
     }else if(paymentVal === "credit card"){
         $('#credit-card').removeClass("is-hidden");
         $('#payPal, #bitCoin').addClass("is-hidden");
+        $('#cc-num, #zip, #cvv').prop('required', true);
     }else{
         $('#payPal, #bitCoin, #credit-card').addClass("is-hidden");
+        $('#cc-num, #zip, #cvv').prop('required', false)
     }
 });
+
+//When the submit is pressed, first, make sure that an activity has been chosen.
+$('button').click(function(event){
+    //Check to see if activity has been chosen
+    var $form = $('form');
+    var enableSubmit = checkActivities($form);
+
+    if(!enableSubmit){
+        event.preventDefault();
+    }
+});
+
+
+//*********** Helper Functions *************//
+
+function checkActivities(form){
+    var boxChecked = false;
+    $('form' + ' input[type="checkbox"]').each(function(){
+        if($(this).is(":checked")) {
+            boxChecked = true;
+        }
+    });
+
+    if(!boxChecked){
+        alert('You have not selected any activities to attend!');
+    }
+
+    return boxChecked;
+}
