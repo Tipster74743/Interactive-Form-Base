@@ -80,13 +80,27 @@
 
       <fieldset class="activities">
         <legend>Register for Activities</legend>
-        <label><input type="checkbox" id="all-activities" name="all"> Main Conference — $200</label>
-        <label><input type="checkbox" id="js-frameworks" name="js-frameworks"> JavaScript Frameworks Workshop — Tuesday 9am-12pm, $100</label>
-        <label><input type="checkbox" id="js-libs" name="js-libs"> JavaScript Libraries Workshop — Tuesday 1pm-4pm, $100</label>
-        <label><input type="checkbox" id="express" name="express"> Express Workshop — Tuesday 9am-12pm, $100</label>
-        <label><input type="checkbox" id="node" name="node"> Node.js Workshop — Tuesday 1pm-4pm, $100</label>
-        <label><input type="checkbox" id="build-tools" name="build-tools"> Build tools Workshop — Wednesday 9am-12pm, $100</label>
-        <label><input type="checkbox" id="npm" name="npm"> npm Workshop — Wednesday 1pm-4pm, $100</label>
+        <table>
+          <thead>
+            <td scope="column"></td>
+            <td scope="column">Activity</td>
+            <td scope="column">Time</td>
+            <td scope="column">Price</td>
+          </thead>
+          <tbody id="activities">
+            <tr>
+              <td><input type="checkbox" id="all-activities" name="all"/></td>
+              <td><label for="all-activities">Main Conference</label></td>
+              <td></td>
+              <td><span>$200</span></td>
+            </tr>
+            <tr>
+          </tbody>
+          <tbody id="totalCost">
+            <td colspan="3" id="total"><span>Total</span></td>
+            <td><span>$0</span></td>
+          </tbody>
+        </table>
                   	
       </fieldset>
       <fieldset>
@@ -160,6 +174,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.15.0/jquery.validate.min.js"></script>
     <script src="http://cdn.jsdelivr.net/jquery.validation/1.15.0/additional-methods.min.js"></script>
+    <script src="js/activities.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

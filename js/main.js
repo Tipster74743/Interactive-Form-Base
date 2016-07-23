@@ -6,14 +6,23 @@
 var $title = $('#title');
 var $colors = $('#color');
 var $design = $('#design');
-var $jsFrameworks = $('#js-frameworks');
-var $express = $('#express');
-var $jslibs = $('#js-libs');
-var $node = $('#node');
 var $payment = $('#payment');
 
 //******* Immediately Invoked Functions*******//
 $title.next().toggle();
+
+for(var i = 1; i < Object.keys(activities).length; i++){
+    var tr = "<tr>";
+    tr += "<td>" + "<input type='checkbox'/></td>";
+    tr+= "<td><label>" + activities[i].name + "</label></td>";
+    tr+= "<td><span>" + activities[i].time + "</span></td>";
+    tr+= "<td><span>" + "$" + activities[i].price + "</span></td>";
+    tr+= "</td>";
+
+    $('#activities').append(tr);
+    addElements(activities[i], i);
+}
+
 $colors.prev().toggle();
 $colors.toggle();
 
@@ -59,23 +68,47 @@ $design.change(function(){
     }
 });
 
-//Each of these functions check to see if the activity that shares a time with it is checked. If it is, the other is disabled.
-$jsFrameworks.click(function(){
-    $express.prop("disabled", $jsFrameworks.prop("checked"));
-});
+//Condensed the functions to one big function that will catch the select event.
 
-$express.click(function(){
-    $jsFrameworks.prop("disabled", $express.prop("checked"));
-});
+$('form .activities input[type="checkbox"]').click(function(event){
+    var $jsFrameworks = $('#js-frameworks');
+    var $express = $('#express');
+    var $jslibs = $('#js-libs');
+    var $node = $('#node');
+    var $price = $('#total').next();
 
-$jslibs.click(function(){
-    $node.prop("disabled", $jslibs.prop("checked"));
-});
+    if(this.name === $jsFrameworks[0].name){
+        $express.prop("disabled", $jsFrameworks.prop("checked"));
+    }else if(this.name === $express[0].name){
+        $jsFrameworks.prop("disabled", $express.prop("checked"));
+    }else if(this.name === $jslibs[0].name){
+        $node.prop("disabled", $jslibs.prop("checked"));
+    }else if(this.name === $node[0].name){
+        $jslibs.prop("disabled", $node.prop("checked"));
+    }
 
-$node.click(function(){
-    $jslibs.prop("disabled", $node.prop("checked"));
-});
+    for(var i = 0; i < activities.length; i++){
+        if(this.name === activities[i].id){
+            var activity = activities[i];
+            if($(this).is(':checked')){
+                activity.selected = true;
+            }else{
+                activity.selected = false;
+            }
+            break;
+        }
+    }
 
+    var amount = getAmount($price.text());
+
+    if(activity.selected){
+        $price.text('$' + (amount + activity.price));
+    }else if(!activity.selected){
+        $price.text('$' + (amount - activity.price));
+    }
+
+
+});
 
 //This toggles each of the payment types. Each shows a particular div that is associated with the value selected.
 $payment.change(function(){
@@ -126,4 +159,16 @@ function checkActivities(form){
     }
 
     return boxChecked;
+}
+
+function addElements(activity, i){
+    var $select = $('tbody tr td input');
+    var $label = $('tbody tr td label:nth-child(n+1)');
+    $select[i].id = activity.id;
+    $select[i].name = activity.id;
+    $label[i].htmlFor = activity.id;
+}
+
+function getAmount(amount){
+    return Number(amount.replace(/[^0-9\.]+/g,""));
 }

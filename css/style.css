@@ -1,6 +1,4 @@
-/* ================================= 
-  Base Element Styles
-==================================== */
+/***********     Base Element Styles     **********/
 
 * {
   box-sizing: border-box;
@@ -63,6 +61,18 @@ legend {
 	border-top: 2px solid #679cb3;
 	margin-bottom: 1.125em;
 }
+thead td{
+	text-align: center;
+	font-size: 1.25em;
+}
+td label,
+td span{
+	margin: 0 20px;
+}
+
+td input{
+	margin-top: 17px;
+}
 
 input[type="text"],
 input[type="email"],
@@ -116,6 +126,14 @@ button:hover {
 /* ================================= 
   Page Styles
 ==================================== */
+#total {
+	text-align: right;
+	font-style: italic;
+}
+
+#totalCost:last-child{
+	padding: 0 auto;
+}
 
 .container {
 	margin: auto;
